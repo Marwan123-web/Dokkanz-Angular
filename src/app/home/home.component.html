@@ -1,0 +1,14 @@
+<p>home works!</p>
+
+<mat-card class="card" *ngFor="let category of categories; index as i">
+    <mat-card-title>{{category.Name}}</mat-card-title>
+    <mat-card-content>
+        <p>
+            {{category.Description}}.
+        </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" [routerLink]="['/category/details',category._id]">View
+            Category</button>
+    </mat-card-actions>
+</mat-card>
