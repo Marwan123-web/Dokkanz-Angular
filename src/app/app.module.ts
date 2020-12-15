@@ -7,8 +7,10 @@ import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
-import { DetailsComponent } from './details/details.component';
+import { HomeComponent, DialogHomeOverview } from './home/home.component';
+import { DetailsComponent, DialogAddview, DialogUpdateview } from './details/details.component';
+import { FooterComponent } from './footer/footer.component';
+
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,14 +19,29 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NavbarComponent } from './navbar/navbar.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    DetailsComponent
+    DialogHomeOverview,
+
+    DetailsComponent,
+    DialogAddview,
+    DialogUpdateview,
+    FooterComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +55,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatGridListModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
