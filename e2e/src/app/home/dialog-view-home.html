@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Add New Category</h1>
+<div mat-dialog-content>
+    <p>Enter Category Name:</p>
+    <mat-form-field [formGroup]="validations_form">
+        <input matInput placeholder="Name" id="cname" formControlName="cname">
+    </mat-form-field>
+    <p>Enter Category Description:</p>
+    <mat-form-field [formGroup]="validations_form">
+        <input matInput placeholder="Description" id="cdescription" formControlName="cdescription">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button cdkFocusInitial (click)="onNoClick()">Close</button>
+    <button mat-button [mat-dialog-close] (click)="addNewCategory()"
+        [disabled]="!validations_form.valid">Save</button>
+</div>

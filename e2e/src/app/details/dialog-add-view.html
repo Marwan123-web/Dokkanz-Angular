@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Add New Product</h1>
+<div mat-dialog-content>
+    <p>Enter Product Code:</p>
+    <mat-form-field [formGroup]="validations_form">
+        <input matInput placeholder="Code" id="pcode" formControlName="pcode">
+    </mat-form-field>
+    <p>Enter Product Name:</p>
+    <mat-form-field [formGroup]="validations_form">
+        <input matInput placeholder="Name" id="pname" formControlName="pname">
+    </mat-form-field>
+    <p>Enter Product Price:</p>
+    <mat-form-field [formGroup]="validations_form">
+        <input matInput type="number" placeholder="Price" id="pprice" formControlName="pprice">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button  cdkFocusInitial (click)="onNoClick()">Close</button>
+    <button mat-button [mat-dialog-close] (click)="addNewProduct()" [disabled]="!validations_form.valid">Save</button>
+</div>

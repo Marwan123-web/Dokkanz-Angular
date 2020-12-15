@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Update Product</h1>
+<div mat-dialog-content>
+    <p>Product Code:</p>
+    <mat-form-field [formGroup]="validations_form">
+        <input matInput placeholder="Code" id="pcode" formControlName="pcode" [(ngModel)]="code">
+    </mat-form-field>
+    <p>Product Name:</p>
+    <mat-form-field [formGroup]="validations_form">
+        <input matInput placeholder="Name" id="pname" formControlName="pname" [(ngModel)]="name">
+    </mat-form-field>
+    <p>Product Price:</p>
+    <mat-form-field [formGroup]="validations_form">
+        <input matInput type="number" placeholder="Price" id="pprice" formControlName="pprice" [(ngModel)]="price">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button cdkFocusInitial (click)="onNoClick()">Close</button>
+    <button mat-button [mat-dialog-close] (click)="updateProduct()" [disabled]="!validations_form.valid">Save</button>
+</div>
