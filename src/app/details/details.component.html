@@ -1,4 +1,4 @@
-<div class="div" >
+<div class="div">
     <mat-form-field>
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Enter Code, Name or Price" #input>
@@ -62,11 +62,17 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
 
-    <button mat-raised-button (click)="openAddDialog()" class="width50" color="primary">
+    <!-- <button mat-raised-button (click)="openAddDialog()" class="width50" color="primary">
         <mat-icon>add</mat-icon>Add New Product
-    </button>
-    <button mat-raised-button (click)="deletedSelectedRows()" class="width50" color="primary" >
+    </button> -->
+    <div class="buttondiv">
+        <button class="button icon fa-plus" (click)="openAddDialog()">Add New Product</button>
+        <button class="button icon fa-trash" (click)="deletedSelectedRows()">Clear Products</button>
+    </div>
+
+
+    <!-- <button mat-raised-button (click)="deletedSelectedRows()" class="width50" color="primary" >
         <mat-icon>delete</mat-icon>Clear Products
-    </button>
+    </button> -->
 
 </div>
