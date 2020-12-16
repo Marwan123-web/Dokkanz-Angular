@@ -1,5 +1,6 @@
 table {
     width: 100%;
+    // height: 100%;
   // td{
   //     color: red;
   // }
@@ -13,6 +14,17 @@ table {
 td, th {
   width: 25%;
 }
+
+
 .width50{
   width: 50%;
+}
+mat-form-field{
+  background-color: #424242;
+  // margin-top: 100px;
+}
+
+.div{
+height: 100%;
+
 }

@@ -1,13 +1,10 @@
-<mat-toolbar>
-    <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-        <mat-icon>menu</mat-icon>
-    </button> -->
-    <span [routerLink]="['/home']">Dokkanz's Task</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" (click)="openAngularUrl()">
-        <mat-icon>link</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon favorite-icon" (click)="openNodeUrl()">
-        <mat-icon>link</mat-icon>
-    </button>
-</mat-toolbar>
+<!-- Header -->
+<header id="header">
+    <div class="inner">
+        <a [routerLink]="['/home']" class="logo">ADIDAS</a>
+        <nav id="nav">
+            <a href="https://github.com/Marwan123-web/Dokkanz-Angular" target="_blank">Front-End Angular</a>
+            <a href="https://github.com/Marwan123-web/dokkanz-s-task" target="_blank">Back-End Node.js</a>
+        </nav>
+    </div>
+</header>

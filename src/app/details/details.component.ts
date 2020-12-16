@@ -18,7 +18,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 export class DetailsComponent implements OnInit {
   sub: any;
   categorydata: any;
-  categoryid: string;
+  categoryname: string;
   data: any;
 
   displayedColumns: string[] = ['select', 'Code', 'Name', 'Price', 'UpdateProduct'];
@@ -46,8 +46,8 @@ export class DetailsComponent implements OnInit {
   }
   getCategoryProducts() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.categoryid = params.get('categoryid');
-      this.appservices.getOneCategory(this.categoryid).subscribe(res => {
+      this.categoryname = params.get('categoryname');
+      this.appservices.getOneCategory(this.categoryname).subscribe(res => {
         this.categorydata = res.Products;
         this.dataSource = new MatTableDataSource(this.categorydata);
         // Assign the paginator *after* dataSource is set
@@ -69,8 +69,8 @@ export class DetailsComponent implements OnInit {
 
     for (let i = 0; i < this.selectedRows.length; i++) {
       this.sub = this._Activatedroute.paramMap.subscribe(params => {
-        this.categoryid = params.get('categoryid');
-        this.appservices.deleteCategoryProduct(this.categoryid, this.selectedRows[i].code).subscribe(res => {
+        this.categoryname = params.get('categoryname');
+        this.appservices.deleteCategoryProduct(this.categoryname, this.selectedRows[i].code).subscribe(res => {
           console.log(res);
           this.getCategoryProducts();
           this.selection.clear();
@@ -95,7 +95,7 @@ export class DetailsComponent implements OnInit {
   openAddDialog(): void {
     let dialogRef = this.dialog.open(DialogAddview, {
       width: '300px',
-      data: { categoryid: this.categoryid }
+      data: { categoryname: this.categoryname }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -109,7 +109,7 @@ export class DetailsComponent implements OnInit {
   openUpdateDialog(productid, code, name, price): void {
     let dialogRef = this.dialog.open(DialogUpdateview, {
       width: '300px',
-      data: { categoryid: this.categoryid, productid: productid, productcode: code, productname: name, productprice: price }
+      data: { categoryname: this.categoryname, productid: productid, productcode: code, productname: name, productprice: price }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -132,13 +132,13 @@ export class DialogAddview implements OnInit {
   productName: any;
   productPrice: any;
   sub: any;
-  categoryid: any;
+  categoryname: any;
   validations_form: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<DialogAddview>,
     @Inject(MAT_DIALOG_DATA) public data: any, private appservices: AppServeService, private _Activatedroute: ActivatedRoute,
     private formBuilder: FormBuilder,) {
-    this.categoryid = data.categoryid;
+    this.categoryname = data.categoryname;
   }
 
 
@@ -165,7 +165,7 @@ export class DialogAddview implements OnInit {
     let productPrice = document.getElementById("pprice") as HTMLInputElement;
     this.productCode = productCode.value, this.productName = productName.value, this.productPrice = productPrice.value
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.appservices.addCategoryProduct(this.categoryid, this.productCode, this.productName, this.productPrice).subscribe(res => {
+      this.appservices.addCategoryProduct(this.categoryname, this.productCode, this.productName, this.productPrice).subscribe(res => {
         console.log(res)
       }, err => {
         console.log(err)
@@ -185,7 +185,7 @@ export class DialogUpdateview implements OnInit {
   productName: any;
   productPrice: any;
   sub: any;
-  categoryid: any;
+  categoryname: any;
   validations_form: FormGroup;
   productid: any;
   price: any;
@@ -196,7 +196,7 @@ export class DialogUpdateview implements OnInit {
     public dialogRef: MatDialogRef<DialogUpdateview>,
     @Inject(MAT_DIALOG_DATA) public data: any, private appservices: AppServeService, private _Activatedroute: ActivatedRoute,
     private formBuilder: FormBuilder,) {
-    this.categoryid = data.categoryid;
+    this.categoryname = data.categoryname;
     this.productid = data.productid;
     this.code = data.productcode;
     this.name = data.productname;
@@ -228,7 +228,7 @@ export class DialogUpdateview implements OnInit {
     let productPrice = document.getElementById("pprice") as HTMLInputElement;
     this.productCode = productCode.value, this.productName = productName.value, this.productPrice = productPrice.value
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.appservices.updateCategoryProduct(this.categoryid, this.productid, this.productCode, this.productName, this.productPrice).subscribe(res => {
+      this.appservices.updateCategoryProduct(this.categoryname, this.productid, this.productCode, this.productName, this.productPrice).subscribe(res => {
         console.log(res)
       }, err => {
         console.log(err)

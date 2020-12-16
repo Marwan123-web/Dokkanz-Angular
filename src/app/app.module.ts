@@ -65,7 +65,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
-      { path: 'category/details/:categoryid', component: DetailsComponent },
+      { path: 'category/details/:categoryname', component: DetailsComponent },
       {
         path: '',
         redirectTo: 'home',

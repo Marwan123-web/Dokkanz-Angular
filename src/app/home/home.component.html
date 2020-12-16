@@ -1,16 +1,18 @@
+<section class="wrapper  special">
+    <div class="inner">
+        <header>
+            <h2>Categories</h2>
+            <button class="button icon fa-plus" (click)="openDialog()">Add New Category </button>
+        </header>
+        <div class="flex flex-4">
+            <div class="box person" *ngFor="let category of categories">
+                <div class="image">
+                    <img src="https://www.transparentpng.com/thumb/adidas-logo/picture-adidas-logo-1.png" alt="image" />
+                </div>
+                <h1>{{category.Name}}</h1>
+                <button class="button" [routerLink]="['/category/details',category.Name]">View Category </button>
+            </div>
 
-    <mat-card *ngFor="let category of categories; index as i">
-        <mat-card-title>{{category.Name}}</mat-card-title>
-        <mat-card-content>
-            <p>
-                {{category.Description}}.
-            </p>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button color="primary" [routerLink]="['/category/details',category._id]">View
-                Category</button>
-        </mat-card-actions>
-    </mat-card>
-<button mat-raised-button (click)="openDialog()" class="width100">
-    <mat-icon>add</mat-icon>Add New Category
-</button>
+        </div>
+    </div>
+</section>

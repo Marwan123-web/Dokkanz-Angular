@@ -17,8 +17,8 @@ export class AppServeService {
     return this.httpClient.get(`${this.url}/viewcategories`);
   }
 
-  public getOneCategory(categoryid): Observable<any> {
-    return this.httpClient.get(`${this.url}/viewcategory/${categoryid}`);
+  public getOneCategory(categoryname): Observable<any> {
+    return this.httpClient.get(`${this.url}/viewcategory/${categoryname}`);
   }
 
   public addNewCategory(Name, Description): Observable<any> {
@@ -27,19 +27,19 @@ export class AppServeService {
     return this.httpClient.post(`${this.url}/addcategory`, this.body, { headers: headers });
   }
 
-  public addCategoryProduct(categoryid, code, name, price): Observable<any> {
+  public addCategoryProduct(categoryname, code, name, price): Observable<any> {
     this.productBody = { code, name, price };
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.post(`${this.url}/addcategoryproduct/${categoryid}`, this.productBody, { headers: headers });
+    return this.httpClient.post(`${this.url}/addcategoryproduct/${categoryname}`, this.productBody, { headers: headers });
   }
 
-  public deleteCategoryProduct(categoryid, productcode): Observable<any> {
+  public deleteCategoryProduct(categoryname, productcode): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.delete(`${this.url}/deletecategoryproduct/${categoryid}/${productcode}`, { headers: headers });
+    return this.httpClient.delete(`${this.url}/deletecategoryproduct/${categoryname}/${productcode}`, { headers: headers });
   }
-  public updateCategoryProduct(categoryid, productid, code, name, price): Observable<any> {
+  public updateCategoryProduct(categoryname, productid, code, name, price): Observable<any> {
     this.productUpdateBody = { code, name, price };
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`${this.url}/updatecategoryproduct/${categoryid}/${productid}`, this.productUpdateBody, { headers: headers });
+    return this.httpClient.put(`${this.url}/updatecategoryproduct/${categoryname}/${productid}`, this.productUpdateBody, { headers: headers });
   }
 }
