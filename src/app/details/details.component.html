@@ -1,9 +1,16 @@
 <div class="div">
+    <div class="buttondiv">
+        <button type="button" class="btn btn-success icon fa-plus" (click)="openAddDialog()">Add New Product</button>
+        <button type="button" class="btn btn-danger icon fa-trash" (click)="deletedSelectedRows()">Clear
+            Products</button>
+    </div>
     <mat-form-field>
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Enter Code, Name or Price" #input>
     </mat-form-field>
+
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
@@ -43,7 +50,7 @@
             <th mat-header-cell *matHeaderCellDef> Update </th>
             <td mat-cell *matCellDef="let product">
                 <button mat-icon-button color="primary"
-                    (click)="openUpdateDialog(product._id,product.code,product.name,product.price)">
+                    (click)="openUpdateDialog(product._id,product.name,product.price)">
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
@@ -65,12 +72,6 @@
     <!-- <button mat-raised-button (click)="openAddDialog()" class="width50" color="primary">
         <mat-icon>add</mat-icon>Add New Product
     </button> -->
-    <div class="buttondiv">
-        <button class="button icon fa-plus" (click)="openAddDialog()">Add New Product</button>
-        <button class="button icon fa-trash" (click)="deletedSelectedRows()">Clear Products</button>
-    </div>
-
-
     <!-- <button mat-raised-button (click)="deletedSelectedRows()" class="width50" color="primary" >
         <mat-icon>delete</mat-icon>Clear Products
     </button> -->

@@ -4,10 +4,6 @@
     <mat-form-field [formGroup]="validations_form">
         <input matInput placeholder="Name" id="cname" formControlName="cname">
     </mat-form-field>
-    <p>Enter Category Description:</p>
-    <mat-form-field [formGroup]="validations_form">
-        <input matInput placeholder="Description" id="cdescription" formControlName="cdescription">
-    </mat-form-field>
 </div>
 <div mat-dialog-actions>
     <button mat-button cdkFocusInitial (click)="onNoClick()">Close</button>

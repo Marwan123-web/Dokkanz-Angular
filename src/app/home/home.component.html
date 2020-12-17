@@ -1,16 +1,23 @@
-<section class="wrapper  special">
-    <div class="inner">
+<section class="wrapper special">
+    <header>
+        <h2>Categories</h2>
+        <button class="button  special icon fa-plus" (click)="openAddNewCatDialog()">Add New Category </button>
+    </header>
+    <div class="inner" *ngFor="let category of categories">
         <header>
-            <h2>Categories</h2>
-            <button class="button icon fa-plus" (click)="openDialog()">Add New Category </button>
+            <h2>{{category.CategoryName}}</h2>
+            <button class="button special icon fa-plus" (click)="openAddNewSubCatDialog(category.CategoryName)">Add New
+                Sub-Category</button>
         </header>
         <div class="flex flex-4">
-            <div class="box person" *ngFor="let category of categories">
+            <div class="box person" *ngFor="let subcategories of category.SubCategories;let i = index;">
                 <div class="image">
-                    <img src="https://www.transparentpng.com/thumb/adidas-logo/picture-adidas-logo-1.png" alt="image" />
+                    <img src="https://st-adidas-egy.mncdn.com/content/img/rnd-adidas-logo.png" alt="image" />
                 </div>
-                <h1>{{category.Name}}</h1>
-                <button class="button" [routerLink]="['/category/details',category.Name]">View Category </button>
+                <h1>{{subcategories.Name}}</h1>
+                <button class="button special"
+                    [routerLink]="['/category/details',category.CategoryName,subcategories.Name]">View Category
+                </button>
             </div>
 
         </div>

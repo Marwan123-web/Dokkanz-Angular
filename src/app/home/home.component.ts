@@ -11,7 +11,8 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class HomeComponent implements OnInit {
   sub: any;
-  categories: Object;
+  categories: any;
+  subCategories: any;
   constructor(private appservices: AppServeService, private _Activatedroute: ActivatedRoute,
     public dialog: MatDialog) { }
 
@@ -28,9 +29,25 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getAllCategories();
   }
-  openDialog(): void {
-    let dialogRef = this.dialog.open(DialogHomeOverview, {
+  openAddNewCatDialog(): void {
+    let dialogRef = this.dialog.open(AddNewCategory, {
       width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.getAllCategories();
+      }, 1500);
+
+
+    });
+  }
+
+  openAddNewSubCatDialog(CategoryName): void {
+    let dialogRef = this.dialog.open(AddNewSubCategory, {
+      width: '300px',
+      data: { CategoryName }
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -43,17 +60,17 @@ export class HomeComponent implements OnInit {
   }
 }
 
+
 @Component({
-  selector: 'dialog-view-home',
-  templateUrl: './dialog-view-home.html',
+  selector: 'add-new-category',
+  templateUrl: './add-new-category.html',
 })
-export class DialogHomeOverview implements OnInit {
+export class AddNewCategory implements OnInit {
   sub: any;
   validations_form: FormGroup;
   categoryName: string;
-  categoryDescription: string;
   constructor(
-    public dialogRef: MatDialogRef<DialogHomeOverview>,
+    public dialogRef: MatDialogRef<AddNewCategory>,
     @Inject(MAT_DIALOG_DATA) public data: any, private appservices: AppServeService, private _Activatedroute: ActivatedRoute,
     private formBuilder: FormBuilder,) {
   }
@@ -68,17 +85,13 @@ export class DialogHomeOverview implements OnInit {
       cname: new FormControl('', Validators.compose([
         Validators.required,
       ])),
-      cdescription: new FormControl('', Validators.compose([
-        Validators.required,
-      ])),
     });
   }
   addNewCategory() {
     let categoryName = document.getElementById("cname") as HTMLInputElement;
-    let categoryDescription = document.getElementById("cdescription") as HTMLInputElement;
-    this.categoryName = categoryName.value, this.categoryDescription = categoryDescription.value
+    this.categoryName = categoryName.value;
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.appservices.addNewCategory(this.categoryName, this.categoryDescription).subscribe(res => {
+      this.appservices.addNewCategory(this.categoryName).subscribe(res => {
         console.log(res)
       }, err => {
         console.log(err)
@@ -87,4 +100,50 @@ export class DialogHomeOverview implements OnInit {
   }
 
 }
+
+
+
+// -------------------
+@Component({
+  selector: 'add-new-sub-category',
+  templateUrl: './add-new-sub-category.html',
+})
+export class AddNewSubCategory implements OnInit {
+  sub: any;
+  validations_form: FormGroup;
+  CategoryName: string;
+  SubCategoryName: any;
+  constructor(
+    public dialogRef: MatDialogRef<AddNewSubCategory>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private appservices: AppServeService, private _Activatedroute: ActivatedRoute,
+    private formBuilder: FormBuilder,) {
+    this.CategoryName = data.CategoryName;
+  }
+
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  ngOnInit() {
+
+    this.validations_form = this.formBuilder.group({
+      scname: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+    });
+  }
+  addNewSubCategory() {
+    let SubCategoryName = document.getElementById("scname") as HTMLInputElement;
+    this.SubCategoryName = SubCategoryName.value;
+    this.sub = this._Activatedroute.paramMap.subscribe(params => {
+      this.appservices.addNewSubCategory(this.CategoryName, this.SubCategoryName).subscribe(res => {
+        console.log(res)
+      }, err => {
+        console.log(err)
+      });
+    });
+  }
+
+}
+
 

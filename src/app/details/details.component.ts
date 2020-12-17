@@ -17,7 +17,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class DetailsComponent implements OnInit {
   sub: any;
-  categorydata: any;
+  subcategorydata: any;
   categoryname: string;
   data: any;
 
@@ -29,6 +29,7 @@ export class DetailsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   selectedRows: any;
+  subcategoryname: any;
   constructor(private appservices: AppServeService, private _Activatedroute: ActivatedRoute,
     public dialog: MatDialog) { }
   /** Whether the number of selected elements matches the total number of rows. */
@@ -47,14 +48,25 @@ export class DetailsComponent implements OnInit {
   getCategoryProducts() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this.categoryname = params.get('categoryname');
+      this.subcategoryname = params.get('subcategoryname');
       this.appservices.getOneCategory(this.categoryname).subscribe(res => {
-        this.categorydata = res.Products;
-        this.dataSource = new MatTableDataSource(this.categorydata);
+        if (res) {
+          // console.log(res)
+          let subCategoryProducts = [];
+          for (let i = 0; i < res.SubCategories.length; i++) {
+            if (res.SubCategories[i].Name == this.subcategoryname) {
+              // console.log(res.SubCategories[i].Name)
+              this.subcategorydata = res.SubCategories[i].Products;
+              // console.log(this.subcategorydata)
+            }
+          }
+        }
+        this.dataSource = new MatTableDataSource(this.subcategorydata);
         // Assign the paginator *after* dataSource is set
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }, err => {
-        this.categorydata = err;
+        this.subcategorydata = err;
         this.dataSource = new MatTableDataSource(err);
       }
       );
@@ -70,7 +82,8 @@ export class DetailsComponent implements OnInit {
     for (let i = 0; i < this.selectedRows.length; i++) {
       this.sub = this._Activatedroute.paramMap.subscribe(params => {
         this.categoryname = params.get('categoryname');
-        this.appservices.deleteCategoryProduct(this.categoryname, this.selectedRows[i].code).subscribe(res => {
+        this.subcategoryname = params.get('subcategoryname');
+        this.appservices.deleteSubCategoryProduct(this.categoryname, this.subcategoryname, this.selectedRows[i].code).subscribe(res => {
           console.log(res);
           this.getCategoryProducts();
           this.selection.clear();
@@ -95,7 +108,7 @@ export class DetailsComponent implements OnInit {
   openAddDialog(): void {
     let dialogRef = this.dialog.open(DialogAddview, {
       width: '300px',
-      data: { categoryname: this.categoryname }
+      data: { categoryname: this.categoryname, subcategoryname: this.subcategoryname }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -106,10 +119,10 @@ export class DetailsComponent implements OnInit {
 
     });
   }
-  openUpdateDialog(productid, code, name, price): void {
+  openUpdateDialog(productid, name, price): void {
     let dialogRef = this.dialog.open(DialogUpdateview, {
       width: '300px',
-      data: { categoryname: this.categoryname, productid: productid, productcode: code, productname: name, productprice: price }
+      data: { categoryname: this.categoryname, subcategoryname: this.subcategoryname, productid: productid, productname: name, productprice: price }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -134,11 +147,13 @@ export class DialogAddview implements OnInit {
   sub: any;
   categoryname: any;
   validations_form: FormGroup;
+  subcategoryname: any;
   constructor(
     public dialogRef: MatDialogRef<DialogAddview>,
     @Inject(MAT_DIALOG_DATA) public data: any, private appservices: AppServeService, private _Activatedroute: ActivatedRoute,
     private formBuilder: FormBuilder,) {
     this.categoryname = data.categoryname;
+    this.subcategoryname = data.subcategoryname;
   }
 
 
@@ -165,7 +180,7 @@ export class DialogAddview implements OnInit {
     let productPrice = document.getElementById("pprice") as HTMLInputElement;
     this.productCode = productCode.value, this.productName = productName.value, this.productPrice = productPrice.value
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.appservices.addCategoryProduct(this.categoryname, this.productCode, this.productName, this.productPrice).subscribe(res => {
+      this.appservices.addSubCategoryProduct(this.categoryname, this.subcategoryname, this.productCode, this.productName, this.productPrice).subscribe(res => {
         console.log(res)
       }, err => {
         console.log(err)
@@ -191,14 +206,15 @@ export class DialogUpdateview implements OnInit {
   price: any;
   name: any;
   code: any;
+  subcategoryname: any;
 
   constructor(
     public dialogRef: MatDialogRef<DialogUpdateview>,
     @Inject(MAT_DIALOG_DATA) public data: any, private appservices: AppServeService, private _Activatedroute: ActivatedRoute,
     private formBuilder: FormBuilder,) {
     this.categoryname = data.categoryname;
+    this.subcategoryname = data.subcategoryname;
     this.productid = data.productid;
-    this.code = data.productcode;
     this.name = data.productname;
     this.price = data.productprice;
 
@@ -211,9 +227,6 @@ export class DialogUpdateview implements OnInit {
   ngOnInit() {
 
     this.validations_form = this.formBuilder.group({
-      pcode: new FormControl('', Validators.compose([
-        Validators.required,
-      ])),
       pname: new FormControl('', Validators.compose([
         Validators.required,
       ])),
@@ -223,12 +236,11 @@ export class DialogUpdateview implements OnInit {
     });
   }
   updateProduct() {
-    let productCode = document.getElementById("pcode") as HTMLInputElement;
     let productName = document.getElementById("pname") as HTMLInputElement;
     let productPrice = document.getElementById("pprice") as HTMLInputElement;
-    this.productCode = productCode.value, this.productName = productName.value, this.productPrice = productPrice.value
+    this.productName = productName.value, this.productPrice = productPrice.value
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.appservices.updateCategoryProduct(this.categoryname, this.productid, this.productCode, this.productName, this.productPrice).subscribe(res => {
+      this.appservices.updateSubCategoryProduct(this.categoryname, this.subcategoryname, this.productid, this.productName, this.productPrice).subscribe(res => {
         console.log(res)
       }, err => {
         console.log(err)

@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import { HomeComponent, DialogHomeOverview } from './home/home.component';
+import { HomeComponent, AddNewCategory, AddNewSubCategory } from './home/home.component';
 import { DetailsComponent, DialogAddview, DialogUpdateview } from './details/details.component';
 import { FooterComponent } from './footer/footer.component';
 
@@ -35,7 +35,8 @@ import { NavbarComponent } from './navbar/navbar.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    DialogHomeOverview,
+    AddNewCategory,
+    AddNewSubCategory,
 
     DetailsComponent,
     DialogAddview,
@@ -65,7 +66,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
-      { path: 'category/details/:categoryname', component: DetailsComponent },
+      { path: 'category/details/:categoryname/:subcategoryname', component: DetailsComponent },
       {
         path: '',
         redirectTo: 'home',

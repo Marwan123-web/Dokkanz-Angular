@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AppServeService {
   url: any = "https://dokkanz-task.herokuapp.com";
+  // url: any = "http://localhost:3000";
   body: any;
   productBody: any;
   productUpdateBody: any;
@@ -17,29 +18,37 @@ export class AppServeService {
     return this.httpClient.get(`${this.url}/viewcategories`);
   }
 
-  public getOneCategory(categoryname): Observable<any> {
-    return this.httpClient.get(`${this.url}/viewcategory/${categoryname}`);
-  }
-
-  public addNewCategory(Name, Description): Observable<any> {
-    this.body = { Name, Description };
+  public addNewCategory(CategoryName,): Observable<any> {
+    this.body = { CategoryName };
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     return this.httpClient.post(`${this.url}/addcategory`, this.body, { headers: headers });
   }
 
-  public addCategoryProduct(categoryname, code, name, price): Observable<any> {
-    this.productBody = { code, name, price };
+  public addNewSubCategory(CategoryName, SubCategoryName): Observable<any> {
+    this.body = { CategoryName, SubCategoryName };
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.post(`${this.url}/addcategoryproduct/${categoryname}`, this.productBody, { headers: headers });
+    return this.httpClient.post(`${this.url}/addsubcategory`, this.body, { headers: headers });
   }
 
-  public deleteCategoryProduct(categoryname, productcode): Observable<any> {
-    let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.delete(`${this.url}/deletecategoryproduct/${categoryname}/${productcode}`, { headers: headers });
+  public getOneCategory(categoryname): Observable<any> {
+    return this.httpClient.get(`${this.url}/viewcategory/${categoryname}`);
   }
-  public updateCategoryProduct(categoryname, productid, code, name, price): Observable<any> {
-    this.productUpdateBody = { code, name, price };
+
+
+
+  public addSubCategoryProduct(categoryname, subcategoryname, code, name, price): Observable<any> {
+    this.productBody = { code, name, price };
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`${this.url}/updatecategoryproduct/${categoryname}/${productid}`, this.productUpdateBody, { headers: headers });
+    return this.httpClient.post(`${this.url}/addsubcategoryproduct/${categoryname}/${subcategoryname}`, this.productBody, { headers: headers });
+  }
+
+  public deleteSubCategoryProduct(categoryname, subcategoryname, productcode): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
+    return this.httpClient.delete(`${this.url}/deletesubcategoryproduct/${categoryname}/${subcategoryname}/${productcode}`, { headers: headers });
+  }
+  public updateSubCategoryProduct(categoryname, subcategoryname, productid, name, price): Observable<any> {
+    this.productUpdateBody = { name, price };
+    let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
+    return this.httpClient.put(`${this.url}/updatesubcategoryproduct/${categoryname}/${subcategoryname}/${productid}`, this.productUpdateBody, { headers: headers });
   }
 }

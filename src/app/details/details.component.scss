@@ -1,27 +1,16 @@
-table {
-    width: 100%;
-    // height: 100%;
-  // td{
-  //     color: red;
-  // }
-}
+
 .mat-form-field {
   font-size: 14px;
   width: 100%;
-  
 }
 
 td, th {
   width: 25%;
 }
 
-
-.width50{
-  width: 50%;
-}
 mat-form-field{
   background-color: #424242;
-  // margin-top: 100px;
+  color: #fff;
 }
 
 .div{
@@ -30,11 +19,16 @@ height: 100%;
 }
 
 .buttondiv button{
-  background-color: #08918f !important;
   border-radius: 20px;
-  box-shadow: 3px 3px 20px 4px rgba(0,0,0,0.25), -3px -3px 20px 4px rgba(0,0,0,0.22);
+}
+button{
+  margin-left: 13px;
+  outline: 0 !important;
+  
 }
 
 .buttondiv{
-  margin: auto;
+  display: block;
+  background-color: #424242 !important;
+  padding: 5px;
 }

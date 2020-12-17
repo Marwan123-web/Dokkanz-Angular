@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Add Sub-Category for {{CategoryName}}</h1>
+<div mat-dialog-content>
+    <p>Enter Sub-Category Name:</p>
+    <mat-form-field [formGroup]="validations_form">
+        <input matInput placeholder="Name" id="scname" formControlName="scname">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button cdkFocusInitial (click)="onNoClick()">Close</button>
+    <button mat-button [mat-dialog-close] (click)="addNewSubCategory()"
+        [disabled]="!validations_form.valid">Save</button>
+</div>
